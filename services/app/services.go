@@ -65,6 +65,18 @@ func (s *service) ShortenUrl(url string) (shortenedUrl string) {
 
 func (s *service) RetrieveOriginalUrl(shortUrl string) (url string, err error) {
 
+	// 1. Check Cache
+	if !s.getCache(shortUrl, &url) {
+		// Cache Hit
+		if !strings.Contains(url, "http") {
+			url = fmt.Sprintf("https://%s", url)
+		}
+		// Async update stats (using shortUrl since we don't have ID)
+		go s.updateStats(shortUrl)
+		return
+	}
+
+	// 2. Cache Miss - Query DB
 	var urlModel models.Url
 	err = s.db.NewSelect().Model(&urlModel).Where("short_urls = ?", shortUrl).Scan(context.Background())
 
@@ -81,18 +93,24 @@ func (s *service) RetrieveOriginalUrl(shortUrl string) (url string, err error) {
 		url = fmt.Sprintf("https://%s", url)
 	}
 
-	// Update stats asynchronously
-	go func() {
-		_, err := s.db.NewUpdate().
-			Model(&urlModel).
-			Set("click_count = click_count + 1").
-			Set("last_accessed_at = ?", time.Now()).
-			Where("id = ?", urlModel.ID).
-			Exec(context.Background())
-		if err != nil {
-			s.Log.Errorln("failed to update stats:", err)
-		}
-	}()
+	// 3. Set Cache (Async or Sync? Sync is safer for next request)
+	// Using 24 hours expiration
+	_ = s.setCache(shortUrl, url, 24*time.Hour)
+
+	// 4. Update Stats
+	go s.updateStats(shortUrl)
 
 	return
+}
+
+func (s *service) updateStats(shortUrl string) {
+	_, err := s.db.NewUpdate().
+		Model((*models.Url)(nil)).
+		Set("click_count = click_count + 1").
+		Set("last_accessed_at = ?", time.Now()).
+		Where("short_urls = ?", shortUrl).
+		Exec(context.Background())
+	if err != nil {
+		s.Log.Errorln("failed to update stats:", err)
+	}
 }

@@ -1,13 +1,20 @@
-@u = http://localhost:1422
+@u = http://localhost:8080
 ###
 GET {{u}}/app
+###
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "www.google.com"
+}
 ###
 # @name shorten
 POST {{u}}/app/url
 Content-Type: application/json
 
 {
-    "url": "www.google.com"
+    "url": "https://ifconfig.me"
 }
 
 > {%

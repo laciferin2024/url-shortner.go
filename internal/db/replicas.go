@@ -35,7 +35,7 @@ func getReplicas(conf *viper.Viper, driver string) (rdbs []*sql.DB) {
 				err = sqlDB.Ping()
 
 				if err != nil {
-					log.Errorln("ignoring replica-%d", i)
+					log.Errorln("ignoring replica-", i)
 				} else {
 					rdbs = append(rdbs, sqlDB)
 				}

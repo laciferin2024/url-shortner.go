@@ -1,4 +1,4 @@
-module github.com/goferHiro/url-shortner
+module github.com/laciferin2024/url-shortner.go
 
 go 1.25.3
 

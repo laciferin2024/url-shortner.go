@@ -9,6 +9,30 @@ Content-Type: application/json
     "url": "www.google.com"
 }
 ###
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "https://google.com"
+}
+
+###
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "https://www.zocket.com"
+}
+
+###
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "https://www.zocket.com/get-quote"
+}
+
+###
 # @name shorten
 POST {{u}}/app/url
 Content-Type: application/json
@@ -33,3 +57,5 @@ Content-Type: application/json
 GET {{surl}}
 ###
 GET {{u}}/app/url/{{scode}}
+###
+GET {{u}}/admin/urls

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/goferHiro/url-shortner/models"
+	"github.com/laciferin2024/url-shortner.go/models"
 )
 
 type Services interface {

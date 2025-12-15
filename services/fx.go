@@ -1,9 +1,9 @@
 package services
 
 import (
-	"github.com/goferHiro/url-shortner/services/app"
-	"github.com/goferHiro/url-shortner/services/auth"
-	"github.com/goferHiro/url-shortner/services/dummy"
+	"github.com/laciferin2024/url-shortner.go/services/app"
+	"github.com/laciferin2024/url-shortner.go/services/auth"
+	"github.com/laciferin2024/url-shortner.go/services/dummy"
 	"go.uber.org/fx"
 )
 

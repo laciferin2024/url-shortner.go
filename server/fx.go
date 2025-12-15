@@ -13,9 +13,9 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/goferHiro/url-shortner/middlewares"
-	"github.com/goferHiro/url-shortner/router"
+	"github.com/laciferin2024/url-shortner.go/enums"
+	"github.com/laciferin2024/url-shortner.go/middlewares"
+	"github.com/laciferin2024/url-shortner.go/router"
 )
 
 var Module = fx.Options(

@@ -1,9 +1,10 @@
 package cache
 
 import (
-	"github.com/goferHiro/url-shortner/internal/genesis"
-	"github.com/gomodule/redigo/redis"
 	"time"
+
+	"github.com/gomodule/redigo/redis"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 )
 
 type cache struct {

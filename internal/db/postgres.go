@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/goferHiro/url-shortner/enums"
+	"github.com/laciferin2024/url-shortner.go/enums"
 
 	"github.com/hiroBzinga/bun"
 	"github.com/hiroBzinga/bun/dialect/pgdialect"

@@ -2,10 +2,11 @@ package app
 
 import (
 	"fmt"
-	"github.com/goferHiro/url-shortner/internal/cache"
-	"github.com/goferHiro/url-shortner/internal/genesis"
-	"github.com/hiroBzinga/bun"
 	"time"
+
+	"github.com/hiroBzinga/bun"
+	"github.com/laciferin2024/url-shortner.go/internal/cache"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 )
 
 type service struct {

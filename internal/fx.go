@@ -1,10 +1,10 @@
 package internal
 
 import (
-	"github.com/goferHiro/url-shortner/internal/cache"
-	"github.com/goferHiro/url-shortner/internal/cron"
-	"github.com/goferHiro/url-shortner/internal/db"
-	"github.com/goferHiro/url-shortner/internal/genesis"
+	"github.com/laciferin2024/url-shortner.go/internal/cache"
+	"github.com/laciferin2024/url-shortner.go/internal/cron"
+	"github.com/laciferin2024/url-shortner.go/internal/db"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 	"go.uber.org/fx"
 )
 

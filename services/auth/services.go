@@ -2,9 +2,10 @@ package auth
 
 import (
 	"fmt"
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/golang-jwt/jwt/v4"
 	"time"
+
+	"github.com/golang-jwt/jwt/v4"
+	"github.com/laciferin2024/url-shortner.go/enums"
 )
 
 type Services interface {

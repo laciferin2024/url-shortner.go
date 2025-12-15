@@ -1,8 +1,8 @@
 package auth
 
 import (
-	"github.com/goferHiro/url-shortner/internal/genesis"
 	"github.com/hiroBzinga/bun"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 )
 import "github.com/golang-jwt/jwt/v4"
 

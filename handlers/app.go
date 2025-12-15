@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/goferHiro/url-shortner/entities"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/laciferin2024/url-shortner.go/entities"
 )
 
 func (h *AppHandler) Home(c *gin.Context) {

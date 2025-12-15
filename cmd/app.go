@@ -5,13 +5,13 @@ import (
 
 	"go.uber.org/fx"
 
-	"github.com/goferHiro/url-shortner/config"
-	"github.com/goferHiro/url-shortner/handlers"
-	"github.com/goferHiro/url-shortner/internal"
-	"github.com/goferHiro/url-shortner/middlewares"
-	"github.com/goferHiro/url-shortner/router"
-	"github.com/goferHiro/url-shortner/server"
-	"github.com/goferHiro/url-shortner/services"
+	"github.com/laciferin2024/url-shortner.go/config"
+	"github.com/laciferin2024/url-shortner.go/handlers"
+	"github.com/laciferin2024/url-shortner.go/internal"
+	"github.com/laciferin2024/url-shortner.go/middlewares"
+	"github.com/laciferin2024/url-shortner.go/router"
+	"github.com/laciferin2024/url-shortner.go/server"
+	"github.com/laciferin2024/url-shortner.go/services"
 )
 
 func serverRun() {

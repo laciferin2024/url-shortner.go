@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	"github.com/goferHiro/url-shortner/enums"
 	"time"
+
+	"github.com/laciferin2024/url-shortner.go/enums"
 )
 
 type argvMeta struct {

@@ -8,5 +8,6 @@ set export
 import? "local.justfile"
 
 run:
-  
+  go run cmd/
+
 

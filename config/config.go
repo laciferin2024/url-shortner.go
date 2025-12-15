@@ -27,7 +27,7 @@ var confList = map[string]argvMeta{
 	},
 	enums.PORT: {
 		"app listen port",
-		"8000",
+		"1422",
 	},
 	enums.POSTGRESQL_DB: {
 		"postgresql db name",

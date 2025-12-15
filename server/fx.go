@@ -62,6 +62,7 @@ func run(i in) {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			server.log.Fatalf("listen: %s\n", err)
 		}
+
 	}()
 
 	quit := make(chan os.Signal)

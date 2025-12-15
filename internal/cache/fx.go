@@ -41,9 +41,15 @@ func newRedis(cache *cache) Services {
 			MaxIdle:   5,
 			Wait:      true,
 			Dial: func() (redis.Conn, error) {
+				opts := []redis.DialOption{}
+
+				if pass := conf.GetString(enums.REDIS_MASTER_PASSWORD); pass != "" {
+					opts = append(opts, redis.DialPassword(pass))
+				}
+
 				return redis.Dial("tcp",
 					conf.GetString(enums.REDIS_SERVER),
-					redis.DialPassword(conf.GetString(enums.REDIS_MASTER_PASSWORD)))
+					opts...)
 			},
 		},
 		cache: cache,

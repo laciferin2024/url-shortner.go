@@ -59,11 +59,11 @@ var confList = map[string]argvMeta{
 	},
 	enums.REDIS_MASTER_PASSWORD: {
 		"write auth for redis cluster",
-		"Nashaath",
+		"",
 	},
 	enums.REDIS_SLAVE_PASSWORD: {
 		"read auth for redis cluster",
-		"Nashaath",
+		"",
 	},
 	enums.TIMEZONE: {
 		"timezone to be used",

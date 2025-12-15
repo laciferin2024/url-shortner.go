@@ -10,10 +10,10 @@ CREATE TABLE public.urls
     urls             text      NOT NULL,
     short_urls       text      NOT NULL,
     click_count      bigint    DEFAULT 0,
-    last_accessed_at timetz    NULL,
-    created_at       timetz    NOT NULL,
-    updated_at timetz    NOT NULL,
-    deleted_at timetz    NULL
+    last_accessed_at timestamptz    NULL,
+    created_at       timestamptz    NOT NULL,
+    updated_at timestamptz    NOT NULL,
+    deleted_at timestamptz    NULL
 )
     PARTITION BY LIST (deleted_at);
 

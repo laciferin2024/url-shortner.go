@@ -47,6 +47,8 @@ func (s *service) ShortenUrl(ctx context.Context, url string) (shortenedUrl stri
 		newUrl := &models.Url{
 			Url:          url,
 			ShortenedUrl: shortenedUrl,
+			CreatedAt:    time.Now(),
+			UpdatedAt:    time.Now(),
 		}
 
 		_, err = s.db.NewInsert().Model(newUrl).Exec(ctx)

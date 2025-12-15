@@ -2,12 +2,20 @@
 ###
 GET {{u}}/app
 ###
+# @name shorten
 POST {{u}}/app/url
 Content-Type: application/json
 
 {
     "url": "www.google.com"
 }
+
+> {%
+    const body = response.body;
+    const url = body["short-url"];
+    const parts = url.split('/');
+    const shortCode = parts[parts.length - 1];
+    client.global.set("surl", shortCode);
+%}
 ###
-@surl = abc1234567
 GET {{u}}/app/url/{{surl}}

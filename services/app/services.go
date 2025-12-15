@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"math/rand"
+	"net/url"
 	"strings"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 type Services interface {
 	ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error)
 	RetrieveOriginalUrl(shortUrl string) (url string, err error)
+	ListUrls(ctx context.Context, limit, offset int) (urls []models.Url, err error)
 }
 
 const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -27,16 +29,22 @@ func randStringBytes(n int) string {
 	return string(b)
 }
 
-func (s *service) ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error) {
+func (s *service) ShortenUrl(ctx context.Context, urlInput string) (shortenedUrl string, err error) {
 
-	if url == "" {
+	if urlInput == "" {
 		s.Log.Errorln("url is empty")
 		return "", fmt.Errorf("url is empty")
 	}
 
+	// Validate URL
+	_, err = url.ParseRequestURI(urlInput)
+	if err != nil {
+		return "", fmt.Errorf("invalid url format")
+	}
+
 	// Check if URL already exists
 	var existing models.Url
-	err = s.db.NewSelect().Model(&existing).Where("urls = ?", url).Scan(ctx)
+	err = s.db.NewSelect().Model(&existing).Where("urls = ?", urlInput).Scan(ctx)
 	if err == nil {
 		return existing.ShortenedUrl, nil
 	}
@@ -45,7 +53,7 @@ func (s *service) ShortenUrl(ctx context.Context, url string) (shortenedUrl stri
 		shortenedUrl = randStringBytes(10)
 
 		newUrl := &models.Url{
-			Url:          url,
+			Url:          urlInput,
 			ShortenedUrl: shortenedUrl,
 			CreatedAt:    time.Now(),
 			UpdatedAt:    time.Now(),
@@ -116,4 +124,14 @@ func (s *service) updateStats(shortUrl string) {
 	if err != nil {
 		s.Log.Errorln("failed to update stats:", err)
 	}
+}
+
+func (s *service) ListUrls(ctx context.Context, limit, offset int) (urls []models.Url, err error) {
+	err = s.db.NewSelect().
+		Model(&urls).
+		Limit(limit).
+		Offset(offset).
+		Order("created_at DESC").
+		Scan(ctx)
+	return
 }

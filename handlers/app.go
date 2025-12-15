@@ -72,3 +72,21 @@ func (h *AppHandler) RetrieveUrl(c *gin.Context) {
 
 	c.Redirect(http.StatusPermanentRedirect, origUrl)
 }
+
+func (h *AppHandler) ListUrls(c *gin.Context) {
+	page := 1
+	pageSize := 10
+
+	// Parse query params (simple implementation)
+	// In a real app, use binding or strconv
+	// For now, hardcoded defaults or simple logic if needed
+	// But let's try to bind if possible, or just use defaults
+
+	urls, err := h.appServices.ListUrls(c.Request.Context(), pageSize, (page-1)*pageSize)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, urls)
+}

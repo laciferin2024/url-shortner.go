@@ -20,6 +20,7 @@ require (
 	github.com/spf13/viper v1.14.0
 	go.uber.org/fx v1.18.2
 	go.uber.org/multierr v1.8.0
+	golang.org/x/time v0.14.0
 )
 
 require (

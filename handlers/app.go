@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/laciferin2024/url-shortner.go/entities"
@@ -74,13 +75,18 @@ func (h *AppHandler) RetrieveUrl(c *gin.Context) {
 }
 
 func (h *AppHandler) ListUrls(c *gin.Context) {
-	page := 1
-	pageSize := 10
+	pageStr := c.DefaultQuery("page", "1")
+	pageSizeStr := c.DefaultQuery("page_size", "10")
 
-	// Parse query params (simple implementation)
-	// In a real app, use binding or strconv
-	// For now, hardcoded defaults or simple logic if needed
-	// But let's try to bind if possible, or just use defaults
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		page = 1
+	}
+
+	pageSize, err := strconv.Atoi(pageSizeStr)
+	if err != nil || pageSize < 1 {
+		pageSize = 10
+	}
 
 	urls, err := h.appServices.ListUrls(c.Request.Context(), pageSize, (page-1)*pageSize)
 	if err != nil {

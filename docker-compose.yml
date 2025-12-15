@@ -4,13 +4,27 @@ services:
     build: .
     ports:
       - "1422:80"
+    environment:
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT=5432
+      - POSTGRESQL_USER=postgres
+      - POSTGRESQL_PASSWORD=1
+      - POSTGRESQL_DB=url_shortner
+      - REDIS_SERVER=redis:6379
     depends_on:
+      redis:
+        condition: service_started
       db:
         condition: service_healthy
+    networks:
+      - app-network
+
   redis:
     image: "redis:alpine"
     ports:
       - "6379:6379"
+    networks:
+      - app-network
 
   db:
     image: postgres:15-alpine
@@ -31,7 +45,13 @@ services:
     volumes:
       - db:/var/lib/postgresql/data
       - ./deployments/ddl.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks:
+      - app-network
 
 volumes:
   db:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge

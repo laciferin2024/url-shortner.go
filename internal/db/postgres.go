@@ -57,7 +57,7 @@ func newPostgressDB(database *db) (db *bun.DB) {
 
 		if err != nil {
 			log.Errorln("unable to ping sqlDB")
-			return
+			//return
 			panic(err)
 		}
 

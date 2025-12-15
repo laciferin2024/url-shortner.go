@@ -25,7 +25,7 @@ func (s *service) setCache(key string, val interface{}, expire time.Duration) (e
 	if err != nil {
 		s.Log.Errorln("cache failed to set -", key)
 		s.Log.Debugln(err.Error())
-		panic(err.Error()) //FIXME
+		// panic(err.Error()) //FIXME: Removed panic to allow graceful degradation
 	}
 	return
 }

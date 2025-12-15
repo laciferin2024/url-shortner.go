@@ -55,7 +55,7 @@ var confList = map[string]argvMeta{
 	},
 	enums.REDIS_SERVER: {
 		"redis server",
-		"20.219.46.174:6379",
+		"0.0.0.0:6379",
 	},
 	enums.REDIS_MASTER_PASSWORD: {
 		"write auth for redis cluster",

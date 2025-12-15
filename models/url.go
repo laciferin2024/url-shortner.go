@@ -15,7 +15,7 @@ type Url struct {
 	ClickCount     int64     `bun:"click_count,default:0" json:"clickCount"`
 	LastAccessedAt time.Time `bun:"last_accessed_at,nullzero" json:"lastAccessedAt,omitempty"`
 
-	CreatedAt time.Time `bun:"created_at,nullzero,default:current_timestamp" json:"createdAt,omitempty"`
-	UpdatedAt time.Time `bun:"updated_at,nullzero" json:"updatedAt,omitempty"`
+	CreatedAt time.Time `bun:"created_at" json:"createdAt,omitempty"`
+	UpdatedAt time.Time `bun:"updated_at" json:"updatedAt,omitempty"`
 	DeletedAt time.Time `bun:"deleted_at,nullzero,soft_delete" json:"deletedAt,omitempty"`
 }

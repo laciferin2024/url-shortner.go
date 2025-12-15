@@ -7,9 +7,11 @@
 CREATE TABLE public.urls
 (
     id         bigserial NOT NULL,
-    urls       text      NOT NULL,
-    short_urls text      NOT NULL,
-    created_at timetz    NOT NULL,
+    urls             text      NOT NULL,
+    short_urls       text      NOT NULL,
+    click_count      bigint    DEFAULT 0,
+    last_accessed_at timetz    NULL,
+    created_at       timetz    NOT NULL,
     updated_at timetz    NOT NULL,
     deleted_at timetz    NULL
 )

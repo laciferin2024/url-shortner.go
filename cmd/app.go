@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"go.uber.org/fx"
 
 	"github.com/goferHiro/url-shortner/config"
@@ -22,5 +24,7 @@ func serverRun() {
 		router.Module,
 		server.Module,
 	)
+
 	app.Run()
+	log.Fatal("shttuing down")
 }

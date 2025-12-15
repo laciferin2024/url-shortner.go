@@ -4,8 +4,9 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/goferHiro/url-shortner/enums"
 	"time"
+
+	"github.com/goferHiro/url-shortner/enums"
 
 	"github.com/hiroBzinga/bun"
 	"github.com/hiroBzinga/bun/dialect/pgdialect"
@@ -26,7 +27,7 @@ func (h *QueryHook) BeforeQuery(ctx context.Context, event *bun.QueryEvent) cont
 
 //goland:noinspection ALL
 func (h *QueryHook) AfterQuery(ctx context.Context, event *bun.QueryEvent) {
-	//h.log.Infof(" %v %v", time.Since(event.StartTime), event.Query) //FIXME doesn't look nice
+	// h.log.Infof(" %v %v", time.Since(event.StartTime), event.Query) //FIXME doesn't look nice
 	h.log.Infof("[BUN] %v\n", time.Since(event.StartTime))
 	err := event.Err
 	if err != nil {
@@ -56,6 +57,7 @@ func newPostgressDB(database *db) (db *bun.DB) {
 
 		if err != nil {
 			log.Errorln("unable to ping sqlDB")
+			return
 			panic(err)
 		}
 
@@ -70,7 +72,7 @@ func newPostgressDB(database *db) (db *bun.DB) {
 
 		/*dbResolver.Exec(fmt.Sprintf("set timezone to '%s'", conf.GetString(enums.TIMEZONE)))
 		dbResolver.Exec("select 1")*/
-		//log.Infoln("successfully tried resolvers")
+		// log.Infoln("successfully tried resolvers")
 
 		db.SetConnMaxLifetime(120 * time.Second)
 		db.SetMaxIdleConns(20)

@@ -3,22 +3,24 @@ package server
 import (
 	"context"
 	"fmt"
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/goferHiro/url-shortner/middlewares"
-	"github.com/goferHiro/url-shortner/router"
-	"github.com/hiroBzinga/bun"
-	"github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
-	"go.uber.org/fx"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/hiroBzinga/bun"
+	"github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	"go.uber.org/fx"
+
+	"github.com/goferHiro/url-shortner/enums"
+	"github.com/goferHiro/url-shortner/middlewares"
+	"github.com/goferHiro/url-shortner/router"
 )
 
 var Module = fx.Options(
 	fx.Invoke(
-		run, //synchronously
+		run, // synchronously
 
 	),
 	fx.Provide(initLogrus),
@@ -33,6 +35,7 @@ type in struct {
 }
 
 func run(i in) {
+	return
 	addr := "0.0.0.0"
 	server := &Server{
 		i.Middlewares,

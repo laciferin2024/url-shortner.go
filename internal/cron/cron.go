@@ -1,13 +1,15 @@
 package cron
 
 import (
-	"github.com/gocraft/work"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/gocraft/work"
 )
 
 func (s *service) init() {
+	return
 
 	s.Log.Infoln("starting cronjob")
 
@@ -18,7 +20,7 @@ func (s *service) init() {
 	})
 
 	// Map the name of jobs to handler functions
-	//pool.Job("dummy", (*service).Dummy)
+	// pool.Job("dummy", (*service).Dummy)
 
 	s.pool.Start()
 

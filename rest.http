@@ -1,0 +1,13 @@
+@u = http://localhost:1422
+###
+GET {{u}}/app
+###
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "www.google.com"
+}
+###
+@surl = abc1234567
+GET {{u}}/app/url/{{surl}}

@@ -12,7 +12,7 @@ import (
 )
 
 type Services interface {
-	ShortenUrl(url string) (shortenedUrl string)
+	ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error)
 	RetrieveOriginalUrl(shortUrl string) (url string, err error)
 }
 
@@ -27,21 +27,21 @@ func randStringBytes(n int) string {
 	return string(b)
 }
 
-func (s *service) ShortenUrl(url string) (shortenedUrl string) {
+func (s *service) ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error) {
 
 	if url == "" {
 		s.Log.Errorln("url is empty")
-		return
+		return "", fmt.Errorf("url is empty")
 	}
 
 	// Check if URL already exists
 	var existing models.Url
-	err := s.db.NewSelect().Model(&existing).Where("urls = ?", url).Scan(context.Background())
+	err = s.db.NewSelect().Model(&existing).Where("urls = ?", url).Scan(ctx)
 	if err == nil {
-		return existing.ShortenedUrl
+		return existing.ShortenedUrl, nil
 	}
 
-	for {
+	for i := 0; i < 5; i++ {
 		shortenedUrl = randStringBytes(10)
 
 		newUrl := &models.Url{
@@ -49,18 +49,19 @@ func (s *service) ShortenUrl(url string) (shortenedUrl string) {
 			ShortenedUrl: shortenedUrl,
 		}
 
-		_, err = s.db.NewInsert().Model(newUrl).Exec(context.Background())
+		_, err = s.db.NewInsert().Model(newUrl).Exec(ctx)
 		if err == nil {
-			break
+			return shortenedUrl, nil
 		}
-		// If error is duplicate key, retry (loop will continue)
-		// For other errors, we should probably log and return (but for now we just retry or return empty if it fails repeatedly?
-		// Ideally we should check if it's a unique constraint violation on short_url)
-		// Simplified: just retry a few times or assume collision is rare enough.
-		// But to be safe, let's just log error and if it's not unique constraint, return.
-		// For simplicity in this task, assuming collision on short_url is the main error to retry.
+
+		s.Log.Errorf("failed to insert url (attempt %d): %v", i+1, err)
+
+		// If context is canceled, stop
+		if ctx.Err() != nil {
+			return "", ctx.Err()
+		}
 	}
-	return
+	return "", fmt.Errorf("failed to shorten url after retries: %v", err)
 }
 
 func (s *service) RetrieveOriginalUrl(shortUrl string) (url string, err error) {

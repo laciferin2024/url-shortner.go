@@ -17,8 +17,8 @@ WORKDIR /app
 COPY --from=builder /app/url-shortner .
 COPY --from=builder /app/deployments ./deployments
 
-ENV PORT=80
+ENV PORT=8080
 
-EXPOSE 80
+EXPOSE 8080
 
 ENTRYPOINT ["./url-shortner"]

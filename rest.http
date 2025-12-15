@@ -15,7 +15,6 @@ Content-Type: application/json
 {
     "url": "https://google.com"
 }
-
 ###
 POST {{u}}/app/url
 Content-Type: application/json
@@ -23,7 +22,6 @@ Content-Type: application/json
 {
     "url": "https://www.zocket.com"
 }
-
 ###
 POST {{u}}/app/url
 Content-Type: application/json
@@ -31,7 +29,6 @@ Content-Type: application/json
 {
     "url": "https://www.zocket.com/get-quote"
 }
-
 ###
 # @name shorten
 POST {{u}}/app/url
@@ -59,3 +56,5 @@ GET {{surl}}
 GET {{u}}/app/url/{{scode}}
 ###
 GET {{u}}/admin/urls
+###
+GET {{u}}/admin/urls?page=2&page_size=1

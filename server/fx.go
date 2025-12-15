@@ -35,7 +35,6 @@ type in struct {
 }
 
 func run(i in) {
-	return
 	addr := "0.0.0.0"
 	server := &Server{
 		i.Middlewares,

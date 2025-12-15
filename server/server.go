@@ -2,10 +2,10 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/goferHiro/url-shortner/middlewares"
-	"github.com/goferHiro/url-shortner/router"
 	"github.com/hiroBzinga/bun"
+	"github.com/laciferin2024/url-shortner.go/enums"
+	"github.com/laciferin2024/url-shortner.go/middlewares"
+	"github.com/laciferin2024/url-shortner.go/router"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )

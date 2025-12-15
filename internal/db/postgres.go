@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/goferHiro/url-shortner/enums"
+	"github.com/laciferin2024/url-shortner.go/enums"
 
 	"github.com/hiroBzinga/bun"
 	"github.com/hiroBzinga/bun/dialect/pgdialect"
@@ -57,7 +57,7 @@ func newPostgressDB(database *db) (db *bun.DB) {
 
 		if err != nil {
 			log.Errorln("unable to ping sqlDB")
-			return
+			//return
 			panic(err)
 		}
 

@@ -13,9 +13,9 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
 
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/goferHiro/url-shortner/middlewares"
-	"github.com/goferHiro/url-shortner/router"
+	"github.com/laciferin2024/url-shortner.go/enums"
+	"github.com/laciferin2024/url-shortner.go/middlewares"
+	"github.com/laciferin2024/url-shortner.go/router"
 )
 
 var Module = fx.Options(
@@ -35,7 +35,6 @@ type in struct {
 }
 
 func run(i in) {
-	return
 	addr := "0.0.0.0"
 	server := &Server{
 		i.Middlewares,
@@ -62,6 +61,7 @@ func run(i in) {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			server.log.Fatalf("listen: %s\n", err)
 		}
+
 	}()
 
 	quit := make(chan os.Signal)

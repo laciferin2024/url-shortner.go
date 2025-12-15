@@ -1,8 +1,8 @@
 package router
 
 import (
-	"github.com/goferHiro/url-shortner/handlers"
-	"github.com/goferHiro/url-shortner/middlewares"
+	"github.com/laciferin2024/url-shortner.go/handlers"
+	"github.com/laciferin2024/url-shortner.go/middlewares"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"

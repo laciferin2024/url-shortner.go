@@ -2,10 +2,11 @@ package app
 
 import (
 	"fmt"
-	"github.com/goferHiro/url-shortner/internal/cache"
-	"github.com/goferHiro/url-shortner/internal/genesis"
-	"github.com/hiroBzinga/bun"
 	"time"
+
+	"github.com/hiroBzinga/bun"
+	"github.com/laciferin2024/url-shortner.go/internal/cache"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 )
 
 type service struct {
@@ -24,7 +25,7 @@ func (s *service) setCache(key string, val interface{}, expire time.Duration) (e
 	if err != nil {
 		s.Log.Errorln("cache failed to set -", key)
 		s.Log.Debugln(err.Error())
-		panic(err.Error()) //FIXME
+		// panic(err.Error()) //FIXME: Removed panic to allow graceful degradation
 	}
 	return
 }

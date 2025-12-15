@@ -1,6 +1,6 @@
 package dummy
 
-import "github.com/goferHiro/url-shortner/internal/genesis"
+import "github.com/laciferin2024/url-shortner.go/internal/genesis"
 
 type service struct {
 	*genesis.Service

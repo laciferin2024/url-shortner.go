@@ -1,0 +1,28 @@
+@u = http://localhost:1422
+###
+GET {{u}}/app
+###
+# @name shorten
+POST {{u}}/app/url
+Content-Type: application/json
+
+{
+    "url": "www.google.com"
+}
+
+> {%
+    const body = response.body;
+    const url = body["short-url"];
+    const surl = url
+    client.global.set("surl",surl)
+    const parts = url.split('/');
+    const shortCode = parts[parts.length - 1];
+    client.global.set("scode", shortCode);
+
+    
+
+%}
+###
+GET {{surl}}
+###
+GET {{u}}/app/url/{{scode}}

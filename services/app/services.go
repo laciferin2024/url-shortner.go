@@ -1,14 +1,18 @@
 package app
 
 import (
+	"context"
+	"database/sql"
 	"fmt"
 	"math/rand"
 	"strings"
 	"time"
+
+	"github.com/laciferin2024/url-shortner.go/models"
 )
 
 type Services interface {
-	ShortenUrl(url string) (shortenedUrl string)
+	ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error)
 	RetrieveOriginalUrl(shortUrl string) (url string, err error)
 }
 
@@ -23,66 +27,93 @@ func randStringBytes(n int) string {
 	return string(b)
 }
 
-type URL struct {
-	u      string
-	expiry time.Time
-}
-
-var expiryMap = make(map[string]URL)
-
-var urlMap = make(map[string]string)
-
-var revUrlMap = make(map[string]string)
-
-var expiryInterval = time.Minute * 1
-
-func (s *service) ShortenUrl(url string) (shortenedUrl string) {
+func (s *service) ShortenUrl(ctx context.Context, url string) (shortenedUrl string, err error) {
 
 	if url == "" {
 		s.Log.Errorln("url is empty")
-		return
+		return "", fmt.Errorf("url is empty")
 	}
 
-	shortenedUrl = urlMap[url]
+	// Check if URL already exists
+	var existing models.Url
+	err = s.db.NewSelect().Model(&existing).Where("urls = ?", url).Scan(ctx)
+	if err == nil {
+		return existing.ShortenedUrl, nil
+	}
 
-	if shortenedUrl == "" {
-	SHORT_URL:
+	for i := 0; i < 5; i++ {
 		shortenedUrl = randStringBytes(10)
 
-		if revUrlMap[shortenedUrl] != "" {
-			goto SHORT_URL
+		newUrl := &models.Url{
+			Url:          url,
+			ShortenedUrl: shortenedUrl,
+			CreatedAt:    time.Now(),
+			UpdatedAt:    time.Now(),
 		}
 
-		revUrlMap[shortenedUrl] = url
-		urlMap[url] = shortenedUrl
-
-		expiryMap[shortenedUrl] = URL{
-			u:      shortenedUrl,
-			expiry: time.Now().Add(expiryInterval),
+		_, err = s.db.NewInsert().Model(newUrl).Exec(ctx)
+		if err == nil {
+			return shortenedUrl, nil
 		}
 
+		s.Log.Errorf("failed to insert url (attempt %d): %v", i+1, err)
+
+		// If context is canceled, stop
+		if ctx.Err() != nil {
+			return "", ctx.Err()
+		}
 	}
-	return
+	return "", fmt.Errorf("failed to shorten url after retries: %v", err)
 }
 
 func (s *service) RetrieveOriginalUrl(shortUrl string) (url string, err error) {
 
-	expiry_ := expiryMap[shortUrl]
-
-	if time.Now().After(expiry_.expiry) {
-		err = fmt.Errorf("shortned url has expired at %v", expiry_.expiry)
+	// 1. Check Cache
+	if !s.getCache(shortUrl, &url) {
+		// Cache Hit
+		if !strings.Contains(url, "http") {
+			url = fmt.Sprintf("https://%s", url)
+		}
+		// Async update stats (using shortUrl since we don't have ID)
+		go s.updateStats(shortUrl)
 		return
 	}
 
-	url = revUrlMap[shortUrl]
+	// 2. Cache Miss - Query DB
+	var urlModel models.Url
+	err = s.db.NewSelect().Model(&urlModel).Where("short_urls = ?", shortUrl).Scan(context.Background())
 
-	if url == "" {
-		err = fmt.Errorf("url %s  not found", shortUrl)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			err = fmt.Errorf("url %s not found", shortUrl)
+		}
 		return
 	}
+
+	url = urlModel.Url
 
 	if !strings.Contains(url, "http") {
 		url = fmt.Sprintf("https://%s", url)
 	}
+
+	// 3. Set Cache (Async or Sync? Sync is safer for next request)
+	// Using 24 hours expiration
+	_ = s.setCache(shortUrl, url, 24*time.Hour)
+
+	// 4. Update Stats
+	go s.updateStats(shortUrl)
+
 	return
+}
+
+func (s *service) updateStats(shortUrl string) {
+	_, err := s.db.NewUpdate().
+		Model((*models.Url)(nil)).
+		Set("click_count = click_count + 1").
+		Set("last_accessed_at = ?", time.Now()).
+		Where("short_urls = ?", shortUrl).
+		Exec(context.Background())
+	if err != nil {
+		s.Log.Errorln("failed to update stats:", err)
+	}
 }

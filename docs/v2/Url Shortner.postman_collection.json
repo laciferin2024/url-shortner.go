@@ -1,0 +1,98 @@
+{
+  "info": {
+    "_postman_id": "acc52879-e6b7-44f6-8acd-fbf25fb9d711",
+    "name": "Url Shortner v2",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "24526930"
+  },
+  "item": [
+    {
+      "name": "App",
+      "item": [
+        {
+          "name": "Home",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{u}}/app",
+              "host": [
+                "{{u}}"
+              ],
+              "path": [
+                "app"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Shorten Url",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"url\":\"www.google.com\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{u}}/app/url",
+              "host": [
+                "{{u}}"
+              ],
+              "path": [
+                "app",
+                "url"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve Url",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{u}}/app/url/:surl",
+              "host": [
+                "{{u}}"
+              ],
+              "path": [
+                "app",
+                "url",
+                ":surl"
+              ],
+              "variable": [
+                {
+                  "key": "surl",
+                  "value": "abc1234567"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Home",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{u}}",
+          "host": [
+            "{{u}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

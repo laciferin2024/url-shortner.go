@@ -2,8 +2,9 @@ package config
 
 import (
 	"fmt"
-	"github.com/goferHiro/url-shortner/enums"
 	"time"
+
+	"github.com/laciferin2024/url-shortner.go/enums"
 )
 
 type argvMeta struct {
@@ -54,15 +55,15 @@ var confList = map[string]argvMeta{
 	},
 	enums.REDIS_SERVER: {
 		"redis server",
-		"20.219.46.174:6379",
+		"0.0.0.0:6379",
 	},
 	enums.REDIS_MASTER_PASSWORD: {
 		"write auth for redis cluster",
-		"Nashaath",
+		"",
 	},
 	enums.REDIS_SLAVE_PASSWORD: {
 		"read auth for redis cluster",
-		"Nashaath",
+		"",
 	},
 	enums.TIMEZONE: {
 		"timezone to be used",

@@ -1,6 +1,6 @@
-module github.com/goferHiro/url-shortner
+module github.com/laciferin2024/url-shortner.go
 
-go 1.19
+go 1.25.5
 
 require (
 	github.com/gin-gonic/gin v1.8.1

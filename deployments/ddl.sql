@@ -7,11 +7,13 @@
 CREATE TABLE public.urls
 (
     id         bigserial NOT NULL,
-    urls       text      NOT NULL,
-    short_urls text      NOT NULL,
-    created_at timetz    NOT NULL,
-    updated_at timetz    NOT NULL,
-    deleted_at timetz    NULL
+    urls             text      NOT NULL,
+    short_urls       text      NOT NULL,
+    click_count      bigint    DEFAULT 0,
+    last_accessed_at timestamptz    NULL,
+    created_at       timestamptz    NOT NULL,
+    updated_at timestamptz    NOT NULL,
+    deleted_at timestamptz    NULL
 )
     PARTITION BY LIST (deleted_at);
 

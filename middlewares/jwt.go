@@ -1,11 +1,12 @@
 package middlewares
 
 import (
-	"github.com/gin-gonic/gin"
-	models_enums "github.com/goferHiro/url-shortner/models/models-enums"
-	"github.com/golang-jwt/jwt/v4"
-	log "github.com/sirupsen/logrus"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v4"
+	models_enums "github.com/laciferin2024/url-shortner.go/models/models-enums"
+	log "github.com/sirupsen/logrus"
 )
 
 func (m *Middleware) AuthorizeJWT() gin.HandlerFunc {

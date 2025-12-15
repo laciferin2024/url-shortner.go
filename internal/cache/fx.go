@@ -1,9 +1,9 @@
 package cache
 
 import (
-	"github.com/goferHiro/url-shortner/enums"
-	"github.com/goferHiro/url-shortner/internal/genesis"
 	"github.com/gomodule/redigo/redis"
+	"github.com/laciferin2024/url-shortner.go/enums"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 	"go.uber.org/fx"
 )
 
@@ -41,9 +41,15 @@ func newRedis(cache *cache) Services {
 			MaxIdle:   5,
 			Wait:      true,
 			Dial: func() (redis.Conn, error) {
+				opts := []redis.DialOption{}
+
+				if pass := conf.GetString(enums.REDIS_MASTER_PASSWORD); pass != "" {
+					opts = append(opts, redis.DialPassword(pass))
+				}
+
 				return redis.Dial("tcp",
 					conf.GetString(enums.REDIS_SERVER),
-					redis.DialPassword(conf.GetString(enums.REDIS_MASTER_PASSWORD)))
+					opts...)
 			},
 		},
 		cache: cache,

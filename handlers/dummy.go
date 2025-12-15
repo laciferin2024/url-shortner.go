@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"github.com/goferHiro/url-shortner/entities"
-	"github.com/goferHiro/url-shortner/validators"
 	"net/http"
+
+	"github.com/laciferin2024/url-shortner.go/entities"
+	"github.com/laciferin2024/url-shortner.go/validators"
 
 	"github.com/gin-gonic/gin"
 )

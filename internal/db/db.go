@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/goferHiro/url-shortner/internal/genesis"
+	"github.com/laciferin2024/url-shortner.go/internal/genesis"
 )
 
 type db struct {

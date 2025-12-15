@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"github.com/goferHiro/url-shortner/services/app"
-	"github.com/goferHiro/url-shortner/services/dummy"
-	"github.com/sirupsen/logrus"
 	"os"
+
+	"github.com/laciferin2024/url-shortner.go/services/app"
+	"github.com/laciferin2024/url-shortner.go/services/dummy"
+	"github.com/sirupsen/logrus"
 
 	"github.com/spf13/viper"
 	"go.uber.org/fx"

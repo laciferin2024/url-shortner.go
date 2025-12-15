@@ -1,15 +1,24 @@
-FROM golang:1.19.4-alpine
-COPY . /opt/url-shortner
-WORKDIR /opt/url-shortner
+# Build stage
+FROM golang:1.25.5-alpine3.23 AS builder
 
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . .
+RUN go build -o url-shortner ./cmd/...
+
+# Final stage
+FROM alpine:latest
+
+WORKDIR /app
+
+COPY --from=builder /app/url-shortner .
+COPY --from=builder /app/deployments ./deployments
 
 ENV PORT=80
 
-RUN go get
-RUN go build -o /app/url-shortner ./cmd/...
-#COPY server.crt /opt/url-shortner
-RUN rm -rf /opt/url-shortner
-
 EXPOSE 80
 
-ENTRYPOINT ["/app/url-shortner"]
+ENTRYPOINT ["./url-shortner"]

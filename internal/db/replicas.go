@@ -2,11 +2,12 @@ package db
 
 import (
 	"database/sql"
-	"github.com/goferHiro/url-shortner/enums"
-	log "github.com/sirupsen/logrus"
-	"github.com/spf13/viper"
 	"strings"
 	"sync"
+
+	"github.com/laciferin2024/url-shortner.go/enums"
+	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
 )
 
 func getReplicas(conf *viper.Viper, driver string) (rdbs []*sql.DB) {
@@ -34,7 +35,7 @@ func getReplicas(conf *viper.Viper, driver string) (rdbs []*sql.DB) {
 				err = sqlDB.Ping()
 
 				if err != nil {
-					log.Errorln("ignoring replica-%d", i)
+					log.Errorln("ignoring replica-", i)
 				} else {
 					rdbs = append(rdbs, sqlDB)
 				}

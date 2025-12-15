@@ -1,12 +1,13 @@
 package middlewares
 
 import (
-	"github.com/goferHiro/url-shortner/services/auth"
+	"os"
+
 	"github.com/hiroBzinga/bun"
+	"github.com/laciferin2024/url-shortner.go/services/auth"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"go.uber.org/fx"
-	"os"
 )
 
 var Module = fx.Options(

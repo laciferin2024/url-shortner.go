@@ -2,9 +2,10 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/goferHiro/url-shortner/entities"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/laciferin2024/url-shortner.go/entities"
 )
 
 func (h *AppHandler) Home(c *gin.Context) {
@@ -37,7 +38,13 @@ func (h *AppHandler) ShortenUrl(c *gin.Context) {
 
 	}
 
-	shortUrl := h.appServices.ShortenUrl(u1.Url)
+	shortUrl, err := h.appServices.ShortenUrl(c.Request.Context(), u1.Url)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
 
 	host := c.Request.Host
 	path := c.Request.URL.RequestURI()

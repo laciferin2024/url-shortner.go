@@ -3,10 +3,11 @@ package cache
 import (
 	"context"
 	"fmt"
-	"github.com/goferHiro/url-shortner/utils"
-	"github.com/gomodule/redigo/redis"
-	"github.com/pkg/errors"
 	"time"
+
+	"github.com/gomodule/redigo/redis"
+	"github.com/laciferin2024/url-shortner.go/utils"
+	"github.com/pkg/errors"
 )
 
 var ErrNotFound = fmt.Errorf("key not found")

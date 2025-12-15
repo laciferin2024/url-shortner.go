@@ -1,23 +1,57 @@
 version: "3.9"
 services:
-  url-shorter:
+  app:
     build: .
     ports:
-      - "80:8000"
+      - "1422:80"
+    environment:
+      - POSTGRESQL_HOST=db
+      - POSTGRESQL_PORT=5432
+      - POSTGRESQL_USER=postgres
+      - POSTGRESQL_PASSWORD=1
+      - POSTGRESQL_DB=url_shortner
+      - REDIS_SERVER=redis:6379
+    depends_on:
+      redis:
+        condition: service_started
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
   redis:
     image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
   db:
-    image: postgres:14.1-alpinet
+    image: postgres:15-alpine
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1
       POSTGRES_DB: url_shortner
       POSTGRES_PORT: 5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
     volumes:
       - db:/var/lib/postgresql/data
       - ./deployments/ddl.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks:
+      - app-network
+
 volumes:
   db:
     driver: local
+
+networks:
+  app-network:
+    driver: bridge

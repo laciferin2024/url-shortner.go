@@ -4,15 +4,16 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"github.com/goferHiro/url-shortner/entities"
-	"github.com/goferHiro/url-shortner/er"
-	"github.com/goferHiro/url-shortner/services/app"
-	"github.com/goferHiro/url-shortner/services/dummy"
-	"github.com/goferHiro/url-shortner/utils"
+	"github.com/laciferin2024/url-shortner.go/entities"
+	"github.com/laciferin2024/url-shortner.go/er"
+	"github.com/laciferin2024/url-shortner.go/services/app"
+	"github.com/laciferin2024/url-shortner.go/services/dummy"
+	"github.com/laciferin2024/url-shortner.go/utils"
 	"github.com/sirupsen/logrus"
-	"net/http"
 
 	"github.com/spf13/viper"
 )

@@ -1,7 +1,7 @@
 package router
 
 import (
-	"github.com/goferHiro/url-shortner/handlers"
+	"github.com/laciferin2024/url-shortner.go/handlers"
 
 	"github.com/spf13/viper"
 	"go.uber.org/fx"

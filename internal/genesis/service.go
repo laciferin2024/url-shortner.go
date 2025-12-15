@@ -3,14 +3,15 @@ package genesis
 import (
 	"context"
 	"encoding/json"
-	"github.com/goferHiro/url-shortner/utils"
+	"net/http"
+	"net/url"
+	"time"
+
+	"github.com/laciferin2024/url-shortner.go/utils"
 	"github.com/parnurzeal/gorequest"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"go.uber.org/multierr"
-	"net/http"
-	"net/url"
-	"time"
 )
 
 type Service struct {

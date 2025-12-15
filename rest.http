@@ -13,9 +13,16 @@ Content-Type: application/json
 > {%
     const body = response.body;
     const url = body["short-url"];
+    const surl = url
+    client.global.set("surl",surl)
     const parts = url.split('/');
     const shortCode = parts[parts.length - 1];
-    client.global.set("surl", shortCode);
+    client.global.set("scode", shortCode);
+
+    
+
 %}
 ###
-GET {{u}}/app/url/{{surl}}
+GET {{surl}}
+###
+GET {{u}}/app/url/{{scode}}
